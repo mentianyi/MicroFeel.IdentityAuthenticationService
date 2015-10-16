@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFClient", "WPFClient\WPFC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroFeel.AspNetIdentityAuthentication", "MicroFeel.AspNetIdentityAuthentication\MicroFeel.AspNetIdentityAuthentication.csproj", "{94925186-C7A2-4809-B9D0-566D399CE365}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassLibrary1", "ClassLibrary1\ClassLibrary1.csproj", "{BF878DE3-23EA-4EA1-A674-EB243F69C503}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,10 @@ Global
 		{94925186-C7A2-4809-B9D0-566D399CE365}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94925186-C7A2-4809-B9D0-566D399CE365}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94925186-C7A2-4809-B9D0-566D399CE365}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF878DE3-23EA-4EA1-A674-EB243F69C503}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF878DE3-23EA-4EA1-A674-EB243F69C503}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF878DE3-23EA-4EA1-A674-EB243F69C503}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF878DE3-23EA-4EA1-A674-EB243F69C503}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

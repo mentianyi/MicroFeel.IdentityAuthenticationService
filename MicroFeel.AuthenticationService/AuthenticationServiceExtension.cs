@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNet.Identity;
-using System;
+﻿using System;
 using System.Web;
 using System.Web.ApplicationServices;
 using System.Web.Security;
@@ -8,11 +7,11 @@ namespace MicroFeel.AuthenticationService
 {
     internal class AuthenticationServiceExtension
     {
-        internal static void AuthenticationService_Authenticating(object sender, AuthenticatingEventArgs e)
+        internal static void AuthenticationService_Authenticating<T>(object sender, AuthenticatingEventArgs e) where T : IDisposable, ClassLibrary1.IAuthenticationUserManager, new()
         {
-            using (var userManager = CustomUserManager.Create())
+            using (T userManager = new T())
             {
-                e.Authenticated = userManager.ValidUser(e.UserName, e.Password);
+                e.Authenticated = userManager.Validuser(e.UserName, e.Password);
                 e.AuthenticationIsComplete = true;
             }
         }

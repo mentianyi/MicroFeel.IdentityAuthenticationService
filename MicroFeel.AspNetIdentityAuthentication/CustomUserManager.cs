@@ -7,16 +7,26 @@ using System.Web;
 
 namespace MicroFeel.AuthenticationService
 {
+    public class auth : ClassLibrary1.IAuthenticationUserManager, IDisposable
+    {
+        private CustomUserManager m = CustomUserManager.Create();
+
+        public void Dispose()
+        {
+            m.Dispose();
+        }
+
+        public bool Validuser(string username, string password)
+        {
+            return m.Find(username, password) != null;
+        }
+    }
+
     public class CustomUserManager : UserManager<AnUser>
     {
         public CustomUserManager(IUserStore<AnUser> store)
             : base(store)
         {
-        }
-
-        public bool ValidUser(string username, string password)
-        {
-            return this.Find(username, password) != null;
         }
 
         public static CustomUserManager Create()

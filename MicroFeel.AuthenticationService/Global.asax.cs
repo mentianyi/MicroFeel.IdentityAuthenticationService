@@ -12,7 +12,7 @@ namespace MicroFeel.AuthenticationService
         protected void Application_Start(object sender, EventArgs e)
         {
             //Custom AuthenticationService methods
-            System.Web.ApplicationServices.AuthenticationService.Authenticating += AuthenticationServiceExtension.AuthenticationService_Authenticating;
+            System.Web.ApplicationServices.AuthenticationService.Authenticating += AuthenticationServiceExtension.AuthenticationService_Authenticating<auth>;
             System.Web.ApplicationServices.AuthenticationService.CreatingCookie += AuthenticationServiceExtension.AuthenticationService_CreatingCookie;
 
             //Custom RoleService methods
