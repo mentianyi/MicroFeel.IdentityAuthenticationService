@@ -19,10 +19,10 @@ namespace MicroFeel.AuthenticationService
             //System.Web.ApplicationServices.RoleService.SelectingProvider += RoleService_SelectingProvider;
         }
 
-        private void RoleService_SelectingProvider(object sender, System.Web.ApplicationServices.SelectingProviderEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
+        //private void RoleService_SelectingProvider(object sender, System.Web.ApplicationServices.SelectingProviderEventArgs e)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         protected void Session_Start(object sender, EventArgs e)
         {
