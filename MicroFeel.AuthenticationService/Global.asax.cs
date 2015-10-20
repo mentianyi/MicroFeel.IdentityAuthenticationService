@@ -13,7 +13,7 @@ namespace MicroFeel.AuthenticationService
         {
             //Custom AuthenticationService methods
             System.Web.ApplicationServices.AuthenticationService.Authenticating += AuthenticationServiceExtension.AuthenticationService_Authenticating<auth>;
-            System.Web.ApplicationServices.AuthenticationService.CreatingCookie += AuthenticationServiceExtension.AuthenticationService_CreatingCookie;
+            System.Web.ApplicationServices.AuthenticationService.CreatingCookie += AuthenticationServiceExtension.AuthenticationService_CreatingCookie<auth>;
 
             //Custom RoleService methods
             //System.Web.ApplicationServices.RoleService.SelectingProvider += RoleService_SelectingProvider;

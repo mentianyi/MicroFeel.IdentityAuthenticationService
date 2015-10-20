@@ -16,20 +16,25 @@ namespace MicroFeel.AuthenticationService
             }
         }
 
-        internal static void AuthenticationService_CreatingCookie(object sender, CreatingCookieEventArgs e)
+        internal static void AuthenticationService_CreatingCookie<T>(object sender, CreatingCookieEventArgs e) where T : IDisposable, ClassLibrary1.IAuthenticationUserManager, new()
         {
             var dt = DateTime.Now;
-            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(
+
+            using (T userManager = new T())
+            {
+                FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(
                     1,
                     e.UserName,
                     dt,
-                    dt.AddMinutes(30),
+                    dt.AddDays(1),
                     e.IsPersistent,
-                    e.CustomCredential,
+                    string.Join(",", userManager.getRoles(e.UserName)),
                     FormsAuthentication.FormsCookiePath);
 
-            HttpContext.Current.Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(ticket)) { Expires = ticket.Expiration });
-            e.CookieIsSet = true;
+                HttpContext.Current.Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(ticket)) { Expires = ticket.Expiration });
+                HttpContext.Current.Response.Cookies.Add(new HttpCookie("Roles", Convert.ToBase64String(System.Text.UTF8Encoding.Default.GetBytes(string.Join(",", userManager.getRoles(e.UserName))))));
+                e.CookieIsSet = true;
+            }
         }
     }
 }

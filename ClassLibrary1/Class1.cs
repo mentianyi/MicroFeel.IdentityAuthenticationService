@@ -9,5 +9,6 @@ namespace ClassLibrary1
     public interface IAuthenticationUserManager
     {
         bool Validuser(string username,string password);
+        string[] getRoles(string username);
     }
 }

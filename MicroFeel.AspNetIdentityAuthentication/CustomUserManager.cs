@@ -16,9 +16,16 @@ namespace MicroFeel.AuthenticationService
             m.Dispose();
         }
 
+        public string[] getRoles(string username)
+        {
+            var user = m.FindByName(username);
+            return m.GetRoles(user.Id).ToArray();
+        }
+
         public bool Validuser(string username, string password)
         {
-            return m.Find(username, password) != null;
+            var user = m.Find(username, password);
+            return user != null;
         }
     }
 
