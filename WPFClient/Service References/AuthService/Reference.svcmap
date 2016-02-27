@@ -26,6 +26,7 @@
   <Metadata>
     <MetadataFile FileName="AuthenticationService.wsdl" MetadataType="Wsdl" ID="8f8ab383-3bb9-458a-854a-dcc5fbef8263" SourceId="1" SourceUrl="http://localhost:21829/AuthenticationService.svc?wsdl" />
     <MetadataFile FileName="AuthenticationService.disco" MetadataType="Disco" ID="fd9d8b7a-e0ae-4f77-bf28-49cc5b13e1c5" SourceId="1" SourceUrl="http://localhost:21829/AuthenticationService.svc?disco" />
+    <MetadataFile FileName="AuthenticationService1.wsdl" MetadataType="Wsdl" ID="7a26aa35-5d78-4cfd-832a-996f73aeb1bf" SourceId="1" SourceUrl="http://localhost:21829/AuthenticationService.svc?wsdl=wsdl0" />
     <MetadataFile FileName="AuthenticationService.xsd" MetadataType="Schema" ID="faa2768d-5644-488c-8335-c3444f057e08" SourceId="1" SourceUrl="http://localhost:21829/AuthenticationService.svc?xsd=xsd1" />
     <MetadataFile FileName="AuthenticationService1.xsd" MetadataType="Schema" ID="41f34dbc-e23d-4940-bcc2-e461c63e723e" SourceId="1" SourceUrl="http://localhost:21829/AuthenticationService.svc?xsd=xsd0" />
   </Metadata>

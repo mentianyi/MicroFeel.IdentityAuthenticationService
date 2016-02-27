@@ -35,27 +35,35 @@ namespace WPFClient
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Login();
+            GetData();
         }
 
-        private void Login()
+        private void GetData()
         {
-            var c = new AuthService.AuthenticationServiceClient();
-
-            using (new OperationContextScope(c.InnerChannel))
+            var id = System.Threading.Thread.CurrentPrincipal.Identity as ClaimsIdentity;
+            if (id != null && id.IsAuthenticated && !string.IsNullOrWhiteSpace(id.Claims.First(v => v.Type == ClaimTypes.UserData).Value) && DateTime.Now < DateTime.Parse(id.Claims.First(v => v.Type == ClaimTypes.Expiration).Value))
             {
-                var id = System.Threading.Thread.CurrentPrincipal.Identity as ClaimsIdentity;
-                if (id != null && id.IsAuthenticated && !string.IsNullOrWhiteSpace(id.Claims.First(v => v.Type == ClaimTypes.UserData).Value) && DateTime.Now < DateTime.Parse(id.Claims.First(v => v.Type == ClaimTypes.Expiration).Value))
-                {
-                    HttpRequestMessageProperty request = new HttpRequestMessageProperty();
-                    request.Headers[HttpResponseHeader.SetCookie] = id.Claims.First(v => v.Type == ClaimTypes.UserData).Value;
-                    OperationContext.Current.OutgoingMessageProperties[HttpRequestMessageProperty.Name] = request;
-                    c.Open();
-                    MessageBox.Show("You have been loggedin ," + id.Name);
-                    return;
-                }
-                var loginform = new Login();
-                if (loginform.ShowDialog() ?? false)
+                //HttpRequestMessageProperty request = new HttpRequestMessageProperty();
+                //request.Headers[HttpRequestHeader.Cookie] = id.Claims.First(v => v.Type == ClaimTypes.UserData).Value;
+                //OperationContext.Current.OutgoingMessageProperties[HttpRequestMessageProperty.Name] = request;
+                //c.Open();
+                MessageBox.Show("You have been loggedin ," + id.Name + ",and your role is " + id.Claims.First(v => v.Type == ClaimTypes.Role).Value);
+
+                //调用 WCF
+                var b = new CookieBehavior(id.Claims.First(v => v.Type == ClaimTypes.UserData).Value);
+
+                var c2 = new ServiceReference1.Service1Client();
+                c2.Endpoint.EndpointBehaviors.Add(b);
+                var result = c2.GetData(14);
+                MessageBox.Show(result ?? "No Value");
+                return;
+            }
+            var loginform = new Login();
+            if (loginform.ShowDialog() ?? false)
+            {
+                var c = new AuthService.AuthenticationServiceClient();
+
+                using (new OperationContextScope(c.InnerChannel))
                 {
                     if (c.ValidateUser(loginform.UserName, loginform.Password, string.Empty) && c.Login(loginform.UserName, loginform.Password, string.Empty, true))
                     {
@@ -64,6 +72,7 @@ namespace WPFClient
                         string cookie = responseMessageProperty.Headers.Get("Set-Cookie");
 
                         //ASP.NET_SessionId=wx5ygqht1vdc4antol5pvq0l; path=/; HttpOnly,.ASPXAUTH=BC10A5A7CB7B83AE8B555F0ECD2DD0778272AA12C78B4A44A2D5203F96363DFA2D4EEF638F553C0B552F7D2BD414F024CE49A089D21CA1546867FBCC0FD5D0233CDAB5EF1FF990BFAA9777524364B57C6EA8E8862AE7C700E49F3013B34F9B5D306F36644684648F9D3EBE64B9017FEF; expires=Fri, 16-Oct-2015 04:30:22 GMT; path=/
+                        //var Currentticket = Regex.Match(cookie, ".ASPXAUTH=(\\w+);").Groups[1].Value;
                         var Currentticket = Regex.Match(cookie, ".ASPXAUTH=(\\w+);").Groups[1].Value;
                         var CurrentExpiresTime = DateTime.ParseExact(Regex.Match(cookie, "expires=(.+GMT);").Groups[1].Value, "ddd, dd-MMM-yyyy HH:mm:ss 'GMT'", CultureInfo.InvariantCulture).ToLocalTime();
                         //var ticket = FormsAuthentication.Decrypt(Currentticket);
@@ -80,17 +89,17 @@ namespace WPFClient
                         list.Add(new Claim(ClaimTypes.UserData, Currentticket));
                         var id2 = new ClaimsIdentity(list, "WCF AuthService");
                         System.Threading.Thread.CurrentPrincipal = new ClaimsPrincipal(id2);
-                        MessageBox.Show("you loggedin :" + System.Threading.Thread.CurrentPrincipal.Identity.Name);
+                        MessageBox.Show("you logged in :" + System.Threading.Thread.CurrentPrincipal.Identity.Name);
                     }
                     else
                     {
                         MessageBox.Show("Login failed!");
                     }
                 }
-                else
-                {
-                    MessageBox.Show("You are not loggedin.");
-                }
+            }
+            else
+            {
+                MessageBox.Show("You are not loggedin.");
             }
         }
     }
